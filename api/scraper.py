@@ -1,16 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-url = "https://www.premierleague.com/players/"
-req = requests.get(url)
-soup = BeautifulSoup(req.content, 'html.parser')
-tags = soup.find_all("a",class_='playerName')
-overview = []
-for tag in tags:
-    player_url = "https://www.premierleague.com"+ tag.get('href')
-    overview.append(player_url)
 
-player = overview[0]
 
 class PlayerStats:
 
@@ -53,45 +44,47 @@ class PlayerStats:
     def __init__(self,url):
 
         self.url = url
+        self.player_names = []
+        self.player_urls = []
+        self.player_stats_urls = []
 
         req = requests.get(url)
-        soup = BeautifulSoup(req.content,'html.parser')
-        tags = soup.find_all('a', class_='playerName')
+        self.soup = BeautifulSoup(req.content,'html.parser')
+        tags = self.soup.find_all('a', class_='playerName')
 
-        self.player_urls = []
-        for url in tags:
-            self.player_urls.append(url)
-        
+        for url in tags:            
+            player_url = "https://www.premierleague.com"+ url.get('href')
+            self.player_urls.append(player_url)
+
+            temp = player_url.split("/")[:-1]
+            stats_url = f"{'/'.join(temp)}/stats"
+            self.player_stats_urls.append(stats_url)        
+    
+    
     def get_player_type(self):
-        for url in self.player_urls:
-            soup = BeautifulSoup(url, 'html.parser')
-            player_type = soup.find_all('div', class_="info")[1].get_text()
-            return player_type
+        player_type = self.soup.find_all('div', class_="info")[1].get_text()
+        return player_type
 
 
     def get_name(self):
-        for url in self.player_urls:
-            soup = BeautifulSoup(url, 'html.parser')
-            player_name = soup.find('div', class_="name t-colour").get_text()
-            return player_name
+        player_name = self.soup.find('div', class_="name t-colour").get_text()
+        self.player_names.append(player_name)        
+        return self.player_names
 
     def get_jersery_number(self):
-        for url in self.player_urls:
-            soup = BeautifulSoup(url, 'html.parser')
-            player_jersey_number = soup.find('div', class_="number t-colour").get_text()
-            return player_jersey_number
+        player_jersey_number = self.soup.find('div', class_="number t-colour").get_text()
+        return player_jersey_number
 
     def get_club(self):
         pass
 
     def get_nationality(self):
-        for url in self.player_urls:
-            soup = BeautifulSoup(url, 'html.parser')
-            player_nationality = soup.find('span', class_="playerCountry").get_text()
-            return player_nationality
+        player_nationality = self.soup.find('span', class_="playerCountry").get_text()
+        return player_nationality
 
     def get_apperances(self):
-        pass 
+        player_appearances = self.soup.find('span', class_="allStatContainer statappearances").get_text()
+        return player_appearances
 
     def get_goals(self):
         pass
@@ -103,39 +96,14 @@ class PlayerStats:
         pass
 
 
+    # def create_instance(self):
+    #     names = []
+    #     for url in self.player_urls:
+    #         req = requests.get(url)
+    #         self.soup = BeautifulSoup(req.content, 'html.parser')
+    #         name = self.get_name()
+    #         names.append(name)
+    #     return names
 
-
-
-def player_overview(url):
-    req = requests.get(url)
-    soup = BeautifulSoup(req.content,'html.parser')
-
-    #Name & Jersey
-    name = soup.find(class_='name t-colour').get_text()
-    print(name)
-    jersey_number = soup.find(class_='number t-colour').get_text()
-    print(jersey_number)
-
-    #Nationality
-    nationality = soup.find(class_='playerCountry').get_text()
-    print(nationality)
-
-    #Age
-    age = soup.find(class_='info--light').get_text()
-    print(age)
-
-
-# player_overview(overview[0])
-
-types = soup.find('td', class_='hide-s')
-print(types)
-
-
-
-
-
-
-# #Stats url
-# new_url = player.split("/")[:-1]
-# print(f"{'/'.join(new_url)}/stats")
-
+       
+            
