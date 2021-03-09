@@ -87,13 +87,16 @@ class PlayerStats:
         return player_appearances
 
     def get_goals(self):
-        pass
+        player_goals = self.soup.find('span', class_="allStatContainer statgoals").get_text()
+        return player_goals
 
     def get_wins(self):
-        pass
+        player_wins = self.soup.find('span', class_="allStatContainer statwins").get_text()
+        return player_wins
 
     def get_losses(self):
-        pass
+        player_losses = self.soup.find('span', class_="allStatContainer statlosses").get_text()
+        return player_losses
 
 
     # def create_instance(self):
