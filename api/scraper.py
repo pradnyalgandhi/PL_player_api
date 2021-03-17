@@ -133,8 +133,6 @@ class PlayerStats:
         club = self.soup.find_all('span', class_= "long")
         apps = self.soup.find_all('td', class_= "appearances")
         goals = self.soup.find_all('td', class_= "goals")
-        
-        
 
         for i in range(0,len(season)):
             career = {}
@@ -145,6 +143,60 @@ class PlayerStats:
             season_stats.append(career)
         return season_stats
 
+    def get_forward_stats(self):
+        stats = []
+        attacking_stats = {}
+        attacking_stats["Goals"] = self.soup.find('span', class_="allStatContainer statgoals").get_text()
+        attacking_stats["Goals per match"] = self.soup.find('span',class_="allStatContainer statgoals_per_game").get_text()
+        attacking_stats["Headers"] = self.soup.find('span',class_="allStatContainer statatt_hd_goal").get_text()
+        attacking_stats["Right Foot Goals"] = self.soup.find('span',class_="allStatContainer statatt_rf_goal").get_text()
+        attacking_stats["Left Foot Goals"] = self.soup.find('span',class_="allStatContainer statatt_lf_goal").get_text()
+        attacking_stats["Penalties"] = self.soup.find('span',class_="allStatContainer statatt_pen_goal").get_text()
+        attacking_stats["Freekicks"] = self.soup.find('span',class_="allStatContainer statatt_freekick_goal").get_text()
+        attacking_stats["Shots"] = self.soup.find('span',class_="allStatContainer stattotal_scoring_att").get_text()
+        attacking_stats["Shots on target"] = self.soup.find('span',class_="allStatContainer statontarget_scoring_att").get_text()
+        attacking_stats["Accuracy %"] = self.soup.find('span',class_="allStatContainer statshot_accuracy").get_text()
+        attacking_stats["Hit woodwork"] = self.soup.find('span',class_="allStatContainer stathit_woodwork").get_text()
+
+        for k,v in attacking_stats.items():
+            attacking_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(attacking_stats)
+
+        team_play_stats = {}
+        team_play_stats["Assists"] = self.soup.find('span', class_="allStatContainer statgoal_assist").get_text()
+        team_play_stats["Total Passes"] = self.soup.find('span', class_="allStatContainer stattotal_pass").get_text()
+        team_play_stats["Passes per match"] = self.soup.find('span', class_="allStatContainer stattotal_pass_per_game").get_text()
+        team_play_stats["Big Chances Created"] = self.soup.find('span', class_="allStatContainer statbig_chance_created").get_text()
+        for k,v in team_play_stats.items():
+            team_play_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        stats.append(team_play_stats)
+
+        discipline_stats = {}
+        discipline_stats["Yellow Card"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
+        discipline_stats["Red Card"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
+        discipline_stats["Fouls"] = self.soup.find('span', class_="allStatContainer statfouls").get_text()
+        discipline_stats["Offsides"] = self.soup.find('span', class_="allStatContainer stattotal_offside").get_text()
+        for k,v in discipline_stats.items():
+            discipline_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        stats.append(discipline_stats)
+
+        defense_stats = {}
+        defense_stats["Tackles"] = self.soup.find('span', class_="allStatContainer stattotal_tackle").get_text()
+        defense_stats["Blocked Shots"] = self.soup.find('span', class_="allStatContainer statblocked_scoring_att").get_text()
+        defense_stats["Interceptions"] = self.soup.find('span', class_="allStatContainer statinterception").get_text()
+        defense_stats["Clearances"] = self.soup.find('span', class_="allStatContainer stattotal_clearance").get_text()
+        defense_stats["Headed Clearance"] = self.soup.find('span', class_="allStatContainer stateffective_head_clearance").get_text()
+        for k,v in defense_stats.items():
+            defense_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        stats.append(defense_stats)
+
+        return stats
+    
+
     def create_instance(self):
         player = []
         for i in range(0, len(self.player_urls)):
@@ -154,34 +206,37 @@ class PlayerStats:
             soup_overview = BeautifulSoup(req.content, 'html.parser')
             self.soup = soup_overview
 
-            player_info['Name'] = self.get_name()
-            player_info['Current Club'] = self.get_club()      
-            player_info['Nationality'] = self.get_nationality()
-            player_info['Position'] = self.player_position[i]
-            player_info['Jersey No'] = self.get_jersey_number()            
-            player_info['Career'] = self.get_career_stats()
+            # player_info['Name'] = self.get_name()
+            # player_info['Current Club'] = self.get_club()      
+            # player_info['Nationality'] = self.get_nationality()
+            # player_info['Position'] = self.player_position[i]
+            # player_info['Jersey No'] = self.get_jersey_number()            
+            # player_info['Career'] = self.get_career_stats()
 
             req = requests.get(self.player_stats_urls[i])
             soup_stats = BeautifulSoup(req.content, 'html.parser')
             self.soup = soup_stats
 
-            player_info['Appearances'] = self.get_apperances()
-            if self.player_position[i] == 'Goalkeeper':
-                player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
-            else:
-                player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
-            player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
-            player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
+            # player_info['Appearances'] = self.get_apperances()
+            # if self.player_position[i] == 'Goalkeeper':
+            #     player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
+            # else:
+            #     player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
+            # player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
+            # player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
+
+            if self.player_position[i] == 'Forward':
+                player_info["Attacking Stats"] = self.get_forward_stats()
 
             player.append(player_info)
         return player
         
-pp = pprint.PrettyPrinter()
-inst = PlayerStats(url)
-pp.pprint(inst.create_instance())
+# pp = pprint.PrettyPrinter()
+# inst = PlayerStats(url)
+# pp.pprint(inst.create_instance())
 
 
-# url1 = "https://www.premierleague.com/players/"
-# inst = PlayerStats(url1)
-# print(len(inst.player_position))
+url1 = "https://www.premierleague.com/players/13286/Tammy-Abraham/stats"
+inst = PlayerStats(url1)
+print(inst.get_forward_stats())
 
