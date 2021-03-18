@@ -218,16 +218,6 @@ class PlayerStats:
 
         stats.append(team_play_stats)
 
-        discipline_stats = {}
-        discipline_stats["Yellow Card"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
-        discipline_stats["Red Card"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
-        discipline_stats["Fouls"] = self.soup.find('span', class_="allStatContainer statfouls").get_text()
-        discipline_stats["Offsides"] = self.soup.find('span', class_="allStatContainer stattotal_offside").get_text()
-        for k,v in discipline_stats.items():
-            discipline_stats.update({k:v.replace(" ","").replace("\n","")})
-
-        stats.append(discipline_stats)
-
         defense_stats = {}
         defense_stats["Tackles"] = self.soup.find('span', class_="allStatContainer stattotal_tackle").get_text()
         defense_stats["Blocked Shots"] = self.soup.find('span', class_="allStatContainer statblocked_scoring_att").get_text()
@@ -241,8 +231,163 @@ class PlayerStats:
 
         return stats
     
+    def get_midfielder_stats(self):
+        
+        defensive_stats = {}
+        defensive_stats["Tackles"] = self.soup.find('span',class_="allStatContainer stattotal_tackle").get_text()
+        defensive_stats["Tackle success %"] = self.soup.find('span',class_="allStatContainer stattackle_success").get_text()
+        defensive_stats["Blocked Shots"] = self.soup.find('span',class_="allStatContainer statblocked_scoring_att").get_text()
+        defensive_stats["Interceptions"] = self.soup.find('span',class_="allStatContainer statinterception").get_text()
+        defensive_stats["Clearances"] = self.soup.find('span',class_="allStatContainer stattotal_clearance").get_text()
+        defensive_stats["Recoveries"] = self.soup.find('span',class_="allStatContainer statball_recovery").get_text()
+        defensive_stats["Duels Wons"] = self.soup.find('span',class_="allStatContainer statduel_won").get_text()
+        defensive_stats["Duels Lost"] = self.soup.find('span',class_="allStatContainer statduel_lost").get_text()
+        defensive_stats["Successful 50/50s"] = self.soup.find('span',class_="allStatContainer statwon_contest").get_text()
+        defensive_stats["Aerial battles won"] = self.soup.find('span',class_="allStatContainer stataerial_won").get_text()
+        defensive_stats["Aerial battles lost"] = self.soup.find('span',class_="allStatContainer stataerial_lost").get_text()
+        defensive_stats["Errors leading to Goal"] = self.soup.find('span',class_="allStatContainer staterror_lead_to_goal").get_text()
+
+        for k,v in defensive_stats.items():
+            defensive_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        return defensive_stats
+    
+    def get_defender_stats(self):
+        stats = []
+
+        attacking_stats = {}
+        attacking_stats["Goals"] = self.soup.find('span', class_="allStatContainer statgoals").get_text()
+        attacking_stats["Headers"] = self.soup.find('span', class_="allStatContainer statatt_hd_goal").get_text()
+        attacking_stats["Right Foot Goals"] = self.soup.find('span', class_="allStatContainer statatt_rf_goal").get_text()
+        attacking_stats["Left Foot Goals"] = self.soup.find('span', class_="allStatContainer statatt_lf_goal").get_text()
+        attacking_stats["Hit Woodwork"] = self.soup.find('span', class_="allStatContainer stathit_woodwork").get_text()
+        for k,v in attacking_stats.items():
+            attacking_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        stats.append(attacking_stats)
+
+        team_play_stats = {}
+        team_play_stats["Assists"] = self.soup.find('span', class_="allStatContainer statgoal_assist").get_text()
+        team_play_stats["Total Passes"] = self.soup.find('span', class_="allStatContainer stattotal_pass").get_text()
+        team_play_stats["Passes per match"] = self.soup.find('span', class_="allStatContainer stattotal_pass_per_game").get_text()
+        team_play_stats["Big Chances Created"] = self.soup.find('span', class_="allStatContainer statbig_chance_created").get_text()
+        team_play_stats["Crosses"] = self.soup.find('span', class_="allStatContainer stattotal_cross").get_text()
+        team_play_stats["Cross Accuracy"] = self.soup.find('span', class_="allStatContainer statcross_accuracy").get_text()
+        team_play_stats["Through Balls"] = self.soup.find('span', class_="allStatContainer stattotal_through_ball").get_text()
+        team_play_stats["Long Balls"] = self.soup.find('span', class_="allStatContainer stataccurate_long_balls").get_text()
+        for k,v in team_play_stats.items():
+            team_play_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        stats.append(team_play_stats)
+
+        defensive_stats = {}
+        defensive_stats["Clean Sheets"] = self.soup.find('span', class_="allStatContainer statclean_sheet").get_text()
+        defensive_stats["Goals conceded"] = self.soup.find('span',class_="allStatContainer statgoals_conceded").get_text()
+        defensive_stats["Tackles"] = self.soup.find('span',class_="allStatContainer stattotal_tackle").get_text()
+        defensive_stats["Tackle success %"] = self.soup.find('span',class_="allStatContainer stattackle_success").get_text()
+        defensive_stats["Blocked Shots"] = self.soup.find('span',class_="allStatContainer statblocked_scoring_att").get_text()
+        defensive_stats["Interceptions"] = self.soup.find('span',class_="allStatContainer statinterception").get_text()
+        defensive_stats["Clearances"] = self.soup.find('span',class_="allStatContainer stattotal_clearance").get_text()
+        defensive_stats["Recoveries"] = self.soup.find('span',class_="allStatContainer statball_recovery").get_text()
+        defensive_stats["Duels Wons"] = self.soup.find('span',class_="allStatContainer statduel_won").get_text()
+        defensive_stats["Duels Lost"] = self.soup.find('span',class_="allStatContainer statduel_lost").get_text()
+        defensive_stats["Successful 50/50s"] = self.soup.find('span',class_="allStatContainer statwon_contest").get_text()
+        defensive_stats["Aerial battles won"] = self.soup.find('span',class_="allStatContainer stataerial_won").get_text()
+        defensive_stats["Aerial battles lost"] = self.soup.find('span',class_="allStatContainer stataerial_lost").get_text()
+        defensive_stats["Own Goals"] = self.soup.find('span',class_="allStatContainer statown_goals").get_text()
+
+        for k,v in defensive_stats.items():
+            defensive_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(defensive_stats)     
+
+        return stats
+
+    def get_goalkeeper_stats(self):
+        stats = []
+
+        goalkeeping_stats = {}
+        goalkeeping_stats["Saves"] = self.soup.find('span', class_="allStatContainer statsaves").get_text()
+        goalkeeping_stats["Penalties Saved"] = self.soup.find('span', class_="allStatContainer statpenalty_save").get_text()
+        goalkeeping_stats["Punches"] = self.soup.find('span', class_="allStatContainer statpunches").get_text()
+        goalkeeping_stats["High Claims"] = self.soup.find('span', class_="allStatContainer statgood_high_claim").get_text()
+        goalkeeping_stats["Catches"] = self.soup.find('span', class_="allStatContainer statcatches").get_text()
+        goalkeeping_stats["Sweeper Clearances"] = self.soup.find('span', class_="allStatContainer stattotal_keeper_sweeper").get_text()
+        goalkeeping_stats["Throw outs"] = self.soup.find('span', class_="allStatContainer statkeeper_throws").get_text()
+        goalkeeping_stats["Goal Kicks"] = self.soup.find('span', class_="allStatContainer statgoal_kicks").get_text()
+        for k,v in goalkeeping_stats.items():
+            goalkeeping_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(goalkeeping_stats)
+
+        defensive_stats = {}
+        defensive_stats["Clean Sheets"] = self.soup.find('span', class_="allStatContainer statclean_sheet").get_text()
+        defensive_stats["Goals conceded"] = self.soup.find('span', class_="allStatContainer statgoals_conceded").get_text()
+        defensive_stats["Errors"] = self.soup.find('span', class_="allStatContainer staterror_lead_to_goal").get_text()
+        defensive_stats["Own Goals"] = self.soup.find('span', class_="allStatContainer statown_goals").get_text()
+        
+        for k,v in defensive_stats.items():
+            defensive_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(defensive_stats)
+
+        discipline_stats = {}
+        discipline_stats["Yellow cards"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
+        discipline_stats["Red Cards"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
+        discipline_stats["Fouls"] = self.soup.find('span', class_="allStatContainer statfouls").get_text()
+
+        for k,v in discipline_stats.items():
+            discipline_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(discipline_stats)
+
+        team_play_stats = {}
+        team_play_stats["Goals"] = self.soup.find('span', class_="allStatContainer statgoals").get_text()
+        team_play_stats["Assists"] = self.soup.find('span', class_="allStatContainer statgoal_assist").get_text()
+        team_play_stats["Passes"] = self.soup.find('span', class_="allStatContainer stattotal_pass").get_text()
+        team_play_stats["Passes per match"] = self.soup.find('span', class_="allStatContainer stattotal_pass_per_game").get_text()
+        team_play_stats["Accurate long balls"] = self.soup.find('span', class_="allStatContainer stataccurate_long_balls").get_text()
+
+        for k,v in team_play_stats.items():
+            team_play_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        stats.append(team_play_stats)
+
+        return stats
+
+    def get_team_play_stats(self):
+
+        team_play_stats = {}
+        team_play_stats["Assists"] = self.soup.find('span', class_="allStatContainer statgoal_assist").get_text()
+        team_play_stats["Total Passes"] = self.soup.find('span', class_="allStatContainer stattotal_pass").get_text()
+        team_play_stats["Passes per match"] = self.soup.find('span', class_="allStatContainer stattotal_pass_per_game").get_text()
+        team_play_stats["Big Chances Created"] = self.soup.find('span', class_="allStatContainer statbig_chance_created").get_text()
+        team_play_stats["Crosses"] = self.soup.find('span', class_="allStatContainer stattotal_cross").get_text()
+        team_play_stats["Cross Accuracy"] = self.soup.find('span', class_="allStatContainer statcross_accuracy").get_text()
+        team_play_stats["Through Balls"] = self.soup.find('span', class_="allStatContainer stattotal_through_ball").get_text()
+        team_play_stats["Long Balls"] = self.soup.find('span', class_="allStatContainer stataccurate_long_balls").get_text()
+        for k,v in team_play_stats.items():
+            team_play_stats.update({k:v.replace(" ","").replace("\n","")})
+        
+        return team_play_stats
+
+
+    def get_discipline_stats(self):
+
+        discipline_stats = {}
+        discipline_stats["Yellow Card"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
+        discipline_stats["Red Card"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
+        discipline_stats["Fouls"] = self.soup.find('span', class_="allStatContainer statfouls").get_text()
+        discipline_stats["Offsides"] = self.soup.find('span', class_="allStatContainer stattotal_offside").get_text()
+        for k,v in discipline_stats.items():
+            discipline_stats.update({k:v.replace(" ","").replace("\n","")})
+
+        return discipline_stats
 
     def create_instance(self):
+        '''
+            A method to call all the functions and return unified data for all the players.
+        '''
         player = []
         for i in range(0, len(self.player_urls)):
 
@@ -273,19 +418,40 @@ class PlayerStats:
             if self.player_position[i] == 'Forward':
                 player_info["Attacking Stats"] = self.get_forward_stats()[0]
                 player_info["Team Play Stats"] = self.get_forward_stats()[1]
-                player_info["Discipline Stats"] = self.get_forward_stats()[2]
-                player_info["Defensive Stats"] = self.get_forward_stats()[3]
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_forward_stats()[2]
+
+            elif self.player_position[i] == "Defender":
+                player_info["Attacking Stats"] = self.get_defender_stats()[0]
+                player_info["Team Play Stats"] = self.get_team_play_stats()
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_defender_stats()[2]
+            
+            elif self.player_position[i] == "Midfielder":
+                player_info["Attacking Stats"] = self.get_forward_stats()[0]
+                player_info["Team Play Stats"] = self.get_team_play_stats()
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_midfielder_stats()
+
+            else:
+                player_info["Goalkeeping"] = self.get_goalkeeper_stats()[0]
+                player_info["Defensive Stats"] = self.get_goalkeeper_stats()[1]
+                player_info["Disciplinary Stats"] = self.get_goalkeeper_stats()[2]
+                player_info["Team Play Stats"] = self.get_goalkeeper_stats()[3]
+
+
+
 
 
             player.append(player_info)
         return player
         
-# pp = pprint.PrettyPrinter()
-# inst = PlayerStats(url)
-# pp.pprint(inst.create_instance())
+pp = pprint.PrettyPrinter()
+inst = PlayerStats(url)
+pp.pprint(inst.create_instance())
 
 
-url1 = "https://www.premierleague.com/players/13286/Tammy-Abraham/stats"
-inst = PlayerStats(url1)
-print(inst.get_forward_stats())
+# url1 = "https://www.premierleague.com/players/4852/Adri%C3%A1n/stats"
+# inst = PlayerStats(url1)
+# print(inst.get_goalkeeper_stats())
 
