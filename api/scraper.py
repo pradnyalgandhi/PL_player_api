@@ -1,8 +1,15 @@
 from bs4 import BeautifulSoup
-import pprint, re
-import requests
+import pprint, re, time
+import requests, json
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 url = "https://www.premierleague.com/players/"
+file_path = "F:/Python/Django/PL Player API/pl_players_api/api/cd/chromedriver.exe"
+option = Options()
+option.headless = True
+driver = webdriver.Chrome(executable_path= file_path, options= option)
+
 
 class PlayerStats:
 
@@ -48,16 +55,20 @@ class PlayerStats:
         self.player_urls = []
         self.player_stats_urls = []
         self.player_position = []
+        driver.get("https://www.premierleague.com/players/")
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+        time.sleep(50)
+        req = driver.page_source
 
-        req = requests.get(url)
-        self.soup = BeautifulSoup(req.content,'html.parser')
+        # req = requests.get(url)
+        self.soup = BeautifulSoup(req, features='html.parser')
 
         #Extracting player URLs
         tags = self.soup.find_all('a', class_='playerName')
 
         for url in tags:            
 
-            player_url = "https://www.premierleague.com"+ url.get('href')
+            player_url = "https:" + url.get('href')
             self.player_urls.append(player_url)            
 
             temp = player_url.split("/")[:-1]
@@ -72,19 +83,12 @@ class PlayerStats:
                 posi = temp.group(2)
                 self.player_position.append(posi)            
  
-    def get_type(self):
-        '''
-            Returns the Type of Player
-            Forward/Midfielder/Defender/Goalkeeper
-        '''
-        player_type = self.soup.find("td", class_="hide-s").get_text()
-        return player_type
 
     def get_name(self):
         '''
             Returns the name of the player
         '''
-        player_name = self.soup.find('div', class_="name t-colour").get_text()               
+        player_name = self.soup.find('div', class_="name t-colour").get_text()
         return player_name
 
     def get_jersey_number(self):
@@ -126,8 +130,11 @@ class PlayerStats:
         '''
             Returns the Total No. of Apps of the player
         '''
-        player_appearances = self.soup.find('span', class_="allStatContainer statappearances").get_text().replace(" ","").replace("\n","")
-        return player_appearances
+        player_appearances = self.soup.find('span', class_="allStatContainer statappearances")
+        if player_appearances:
+            return player_appearances.get_text().replace(" ","").replace("\n","")
+        else:
+            return "Not Available"
 
     def get_goals(self):
         '''
@@ -182,12 +189,7 @@ class PlayerStats:
 
     def get_forward_stats(self):
         '''
-            Returns a library of Stats for a Forward
-            Sub divided into 4 sections
-            1. Attacking Stats
-            2. Team Play Stats
-            3. Disciplinary Stats
-            4. Defensive Stats
+            Returns a library of Stats for a Forward            
         '''
         stats = []
         attacking_stats = {}
@@ -232,6 +234,9 @@ class PlayerStats:
         return stats
     
     def get_midfielder_stats(self):
+        '''
+            Returns a library of Stats for a Midfielder           
+        '''
         
         defensive_stats = {}
         defensive_stats["Tackles"] = self.soup.find('span',class_="allStatContainer stattotal_tackle").get_text()
@@ -253,6 +258,9 @@ class PlayerStats:
         return defensive_stats
     
     def get_defender_stats(self):
+        '''
+            Returns a library of Stats for a Defender          
+        '''
         stats = []
 
         attacking_stats = {}
@@ -304,6 +312,9 @@ class PlayerStats:
         return stats
 
     def get_goalkeeper_stats(self):
+        '''
+            Returns a library of Stats for a Goalkeeper        
+        '''
         stats = []
 
         goalkeeping_stats = {}
@@ -356,6 +367,9 @@ class PlayerStats:
         return stats
 
     def get_team_play_stats(self):
+        '''
+            Returns team playing stats of a player            
+        '''
 
         team_play_stats = {}
         team_play_stats["Assists"] = self.soup.find('span', class_="allStatContainer statgoal_assist").get_text()
@@ -373,6 +387,9 @@ class PlayerStats:
 
 
     def get_discipline_stats(self):
+        '''
+            Returns disciplinary stats of a player           
+        '''
 
         discipline_stats = {}
         discipline_stats["Yellow Card"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
@@ -397,51 +414,47 @@ class PlayerStats:
             self.soup = soup_overview
 
             player_info['Name'] = self.get_name()
-            player_info['Current Club'] = self.get_club()      
-            player_info['Nationality'] = self.get_nationality()
-            player_info['Position'] = self.player_position[i]
-            player_info['Jersey No'] = self.get_jersey_number()            
-            player_info['Career'] = self.get_career_stats()
+        #     player_info['Current Club'] = self.get_club()      
+        #     player_info['Nationality'] = self.get_nationality()
+        #     player_info['Position'] = self.player_position[i]
+        #     player_info['Jersey No'] = self.get_jersey_number()            
+        #     player_info['Career'] = self.get_career_stats()
 
-            req = requests.get(self.player_stats_urls[i])
-            soup_stats = BeautifulSoup(req.content, 'html.parser')
-            self.soup = soup_stats
+        #     req = requests.get(self.player_stats_urls[i])
+        #     soup_stats = BeautifulSoup(req.content, 'html.parser')
+        #     self.soup = soup_stats
 
-            player_info['Appearances'] = self.get_apperances()
-            if self.player_position[i] == 'Goalkeeper':
-                player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
-            else:
-                player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
-            player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
-            player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
+        #     player_info['Appearances'] = self.get_apperances()
+        #     if self.player_position[i] == 'Goalkeeper':
+        #         player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
+        #     else:
+        #         player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
+        #     player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
+        #     player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
 
-            if self.player_position[i] == 'Forward':
-                player_info["Attacking Stats"] = self.get_forward_stats()[0]
-                player_info["Team Play Stats"] = self.get_forward_stats()[1]
-                player_info["Disciplinary Stats"] = self.get_discipline_stats()
-                player_info["Defensive Stats"] = self.get_forward_stats()[2]
+        #     if self.player_position[i] == 'Forward':
+        #         player_info["Attacking Stats"] = self.get_forward_stats()[0]
+        #         player_info["Team Play Stats"] = self.get_forward_stats()[1]
+        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
+        #         player_info["Defensive Stats"] = self.get_forward_stats()[2]
 
-            elif self.player_position[i] == "Defender":
-                player_info["Attacking Stats"] = self.get_defender_stats()[0]
-                player_info["Team Play Stats"] = self.get_team_play_stats()
-                player_info["Disciplinary Stats"] = self.get_discipline_stats()
-                player_info["Defensive Stats"] = self.get_defender_stats()[2]
+        #     elif self.player_position[i] == "Defender":
+        #         player_info["Attacking Stats"] = self.get_defender_stats()[0]
+        #         player_info["Team Play Stats"] = self.get_team_play_stats()
+        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
+        #         player_info["Defensive Stats"] = self.get_defender_stats()[2]
             
-            elif self.player_position[i] == "Midfielder":
-                player_info["Attacking Stats"] = self.get_forward_stats()[0]
-                player_info["Team Play Stats"] = self.get_team_play_stats()
-                player_info["Disciplinary Stats"] = self.get_discipline_stats()
-                player_info["Defensive Stats"] = self.get_midfielder_stats()
+        #     elif self.player_position[i] == "Midfielder":
+        #         player_info["Attacking Stats"] = self.get_forward_stats()[0]
+        #         player_info["Team Play Stats"] = self.get_team_play_stats()
+        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
+        #         player_info["Defensive Stats"] = self.get_midfielder_stats()
 
-            else:
-                player_info["Goalkeeping"] = self.get_goalkeeper_stats()[0]
-                player_info["Defensive Stats"] = self.get_goalkeeper_stats()[1]
-                player_info["Disciplinary Stats"] = self.get_goalkeeper_stats()[2]
-                player_info["Team Play Stats"] = self.get_goalkeeper_stats()[3]
-
-
-
-
+        #     else:
+        #         player_info["Goalkeeping"] = self.get_goalkeeper_stats()[0]
+        #         player_info["Defensive Stats"] = self.get_goalkeeper_stats()[1]
+        #         player_info["Disciplinary Stats"] = self.get_goalkeeper_stats()[2]
+        #         player_info["Team Play Stats"] = self.get_goalkeeper_stats()[3]
 
             player.append(player_info)
         return player
@@ -454,4 +467,7 @@ pp.pprint(inst.create_instance())
 # url1 = "https://www.premierleague.com/players/4852/Adri%C3%A1n/stats"
 # inst = PlayerStats(url1)
 # print(inst.get_goalkeeper_stats())
+
+
+
 
