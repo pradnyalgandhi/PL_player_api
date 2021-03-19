@@ -57,7 +57,7 @@ class PlayerStats:
         self.player_position = []
         driver.get("https://www.premierleague.com/players/")
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-        time.sleep(50)
+        time.sleep(10)
         req = driver.page_source
 
         # req = requests.get(url)
@@ -81,7 +81,9 @@ class PlayerStats:
             temp = re.search(r'(\"\>)(\w*)(\<\/td)', str(pos))
             if temp:         
                 posi = temp.group(2)
-                self.player_position.append(posi)            
+                self.player_position.append(posi)
+
+        driver.quit()        
  
 
     def get_name(self):
@@ -194,7 +196,6 @@ class PlayerStats:
         stats = []
         attacking_stats = {}
         attacking_stats["Goals"] = self.soup.find('span', class_="allStatContainer statgoals").get_text()
-        attacking_stats["Goals per match"] = self.soup.find('span',class_="allStatContainer statgoals_per_game").get_text()
         attacking_stats["Headers"] = self.soup.find('span',class_="allStatContainer statatt_hd_goal").get_text()
         attacking_stats["Right Foot Goals"] = self.soup.find('span',class_="allStatContainer statatt_rf_goal").get_text()
         attacking_stats["Left Foot Goals"] = self.soup.find('span',class_="allStatContainer statatt_lf_goal").get_text()
@@ -407,7 +408,7 @@ class PlayerStats:
         '''
         player = []
         # Change loop 
-        for i in range(0, len(self.player_urls)):
+        for i in range(0, 10):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
@@ -463,7 +464,6 @@ class PlayerStats:
 pp = pprint.PrettyPrinter()
 inst = PlayerStats(url)
 pp.pprint(inst.create_instance())
-
 
 # url1 = "https://www.premierleague.com/players/4852/Adri%C3%A1n/stats"
 # inst = PlayerStats(url1)
