@@ -406,6 +406,7 @@ class PlayerStats:
             A method to call all the functions and return unified data for all the players.
         '''
         player = []
+        # Change loop 
         for i in range(0, len(self.player_urls)):
 
             player_info = {}
@@ -414,47 +415,47 @@ class PlayerStats:
             self.soup = soup_overview
 
             player_info['Name'] = self.get_name()
-        #     player_info['Current Club'] = self.get_club()      
-        #     player_info['Nationality'] = self.get_nationality()
-        #     player_info['Position'] = self.player_position[i]
-        #     player_info['Jersey No'] = self.get_jersey_number()            
-        #     player_info['Career'] = self.get_career_stats()
+            player_info['Current Club'] = self.get_club()      
+            player_info['Nationality'] = self.get_nationality()
+            player_info['Position'] = self.player_position[i]
+            player_info['Jersey No'] = self.get_jersey_number()            
+            player_info['Career'] = self.get_career_stats()
 
-        #     req = requests.get(self.player_stats_urls[i])
-        #     soup_stats = BeautifulSoup(req.content, 'html.parser')
-        #     self.soup = soup_stats
+            req = requests.get(self.player_stats_urls[i])
+            soup_stats = BeautifulSoup(req.content, 'html.parser')
+            self.soup = soup_stats
 
-        #     player_info['Appearances'] = self.get_apperances()
-        #     if self.player_position[i] == 'Goalkeeper':
-        #         player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
-        #     else:
-        #         player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
-        #     player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
-        #     player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
+            player_info['Appearances'] = self.get_apperances()
+            if self.player_position[i] == 'Goalkeeper':
+                player_info['Clean Sheets'] = self.get_clean_sheets().replace(" ", "").replace("\n","")
+            else:
+                player_info['Goals'] = self.get_goals().replace(" ", "").replace("\n","")
+            player_info['Total Wins'] = self.get_wins().replace(" ", "").replace("\n","")
+            player_info['Total Losses'] = self.get_losses().replace(" ", "").replace("\n","")
 
-        #     if self.player_position[i] == 'Forward':
-        #         player_info["Attacking Stats"] = self.get_forward_stats()[0]
-        #         player_info["Team Play Stats"] = self.get_forward_stats()[1]
-        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
-        #         player_info["Defensive Stats"] = self.get_forward_stats()[2]
+            if self.player_position[i] == 'Forward':
+                player_info["Attacking Stats"] = self.get_forward_stats()[0]
+                player_info["Team Play Stats"] = self.get_forward_stats()[1]
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_forward_stats()[2]
 
-        #     elif self.player_position[i] == "Defender":
-        #         player_info["Attacking Stats"] = self.get_defender_stats()[0]
-        #         player_info["Team Play Stats"] = self.get_team_play_stats()
-        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
-        #         player_info["Defensive Stats"] = self.get_defender_stats()[2]
+            elif self.player_position[i] == "Defender":
+                player_info["Attacking Stats"] = self.get_defender_stats()[0]
+                player_info["Team Play Stats"] = self.get_team_play_stats()
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_defender_stats()[2]
             
-        #     elif self.player_position[i] == "Midfielder":
-        #         player_info["Attacking Stats"] = self.get_forward_stats()[0]
-        #         player_info["Team Play Stats"] = self.get_team_play_stats()
-        #         player_info["Disciplinary Stats"] = self.get_discipline_stats()
-        #         player_info["Defensive Stats"] = self.get_midfielder_stats()
+            elif self.player_position[i] == "Midfielder":
+                player_info["Attacking Stats"] = self.get_forward_stats()[0]
+                player_info["Team Play Stats"] = self.get_team_play_stats()
+                player_info["Disciplinary Stats"] = self.get_discipline_stats()
+                player_info["Defensive Stats"] = self.get_midfielder_stats()
 
-        #     else:
-        #         player_info["Goalkeeping"] = self.get_goalkeeper_stats()[0]
-        #         player_info["Defensive Stats"] = self.get_goalkeeper_stats()[1]
-        #         player_info["Disciplinary Stats"] = self.get_goalkeeper_stats()[2]
-        #         player_info["Team Play Stats"] = self.get_goalkeeper_stats()[3]
+            else:
+                player_info["Goalkeeping"] = self.get_goalkeeper_stats()[0]
+                player_info["Defensive Stats"] = self.get_goalkeeper_stats()[1]
+                player_info["Disciplinary Stats"] = self.get_goalkeeper_stats()[2]
+                player_info["Team Play Stats"] = self.get_goalkeeper_stats()[3]
 
             player.append(player_info)
         return player
