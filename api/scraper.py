@@ -402,13 +402,13 @@ class PlayerStats:
 
         return discipline_stats
 
-    def create_instance(self):
+    def get_data(self):
         '''
             A method to call all the functions and return unified data for all the players.
         '''
         player = []
         # Change loop 
-        for i in range(0, 10):
+        for i in range(0, 2):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
@@ -461,14 +461,5 @@ class PlayerStats:
             player.append(player_info)
         return player
         
-pp = pprint.PrettyPrinter()
-inst = PlayerStats(url)
-pp.pprint(inst.create_instance())
-
-# url1 = "https://www.premierleague.com/players/4852/Adri%C3%A1n/stats"
-# inst = PlayerStats(url1)
-# print(inst.get_goalkeeper_stats())
-
-
-
-
+# inst = PlayerStats(url)
+# print(inst.get_data())

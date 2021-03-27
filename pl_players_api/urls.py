@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import home
+from api.views import scrapped_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name="home")
+    path('', scrapped_data, name="home")
 ]
