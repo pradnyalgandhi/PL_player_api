@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import requests, json
 from .scraper import PlayerStats
-from .models import PlayerInfo, PlayerSeasonWiseStats
+from .models import PlayerInfo, PlayerSeasonWiseStats, AttackingStats, DefensiveStats, DisciplinaryStats, TeamPlayStats
 
 
 def scrapped_data(request):
@@ -35,6 +35,8 @@ def scrapped_data(request):
                           goals = stat['Goals']
          )
          player_season.save()
+
+      # Loop for Atk,def, dis and teamplay stats 
    # print(name,current_club,nationality, position)  
    
 

@@ -251,7 +251,6 @@ class PlayerStats:
         defensive_stats["Successful 50/50s"] = self.soup.find('span',class_="allStatContainer statwon_contest").get_text()
         defensive_stats["Aerial battles won"] = self.soup.find('span',class_="allStatContainer stataerial_won").get_text()
         defensive_stats["Aerial battles lost"] = self.soup.find('span',class_="allStatContainer stataerial_lost").get_text()
-        defensive_stats["Errors leading to Goal"] = self.soup.find('span',class_="allStatContainer staterror_lead_to_goal").get_text()
 
         for k,v in defensive_stats.items():
             defensive_stats.update({k:v.replace(" ","").replace("\n","")})
@@ -408,7 +407,7 @@ class PlayerStats:
         '''
         player = []
         # Change loop 
-        for i in range(0, 2):
+        for i in range(4, 5):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
@@ -461,5 +460,5 @@ class PlayerStats:
             player.append(player_info)
         return player
         
-# inst = PlayerStats(url)
-# print(inst.get_data())
+inst = PlayerStats(url)
+print(inst.get_data())
