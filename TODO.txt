@@ -192,8 +192,8 @@ Goalkeeper Stats Struct
     'Errors': '10',
     'Own Goals': '0' },
 'Disciplinary Stats': { 
-    'Yellow cards': '10',
-    'Red Cards': '2',
+    'Yellow Card': '10',
+    'Red Card': '2',
     'Fouls': '5' },
 'Team Play Stats': { 
     'Goals': '0',

@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import scrapped_data
+from api.views import update_model
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', scrapped_data, name="home")
+    path('', update_model, name="home")
 ]

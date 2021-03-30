@@ -204,7 +204,7 @@ class PlayerStats:
         attacking_stats["Shots"] = self.soup.find('span',class_="allStatContainer stattotal_scoring_att").get_text()
         attacking_stats["Shots on target"] = self.soup.find('span',class_="allStatContainer statontarget_scoring_att").get_text()
         attacking_stats["Accuracy %"] = self.soup.find('span',class_="allStatContainer statshot_accuracy").get_text()
-        attacking_stats["Hit woodwork"] = self.soup.find('span',class_="allStatContainer stathit_woodwork").get_text()
+        attacking_stats["Hit Woodwork"] = self.soup.find('span',class_="allStatContainer stathit_woodwork").get_text()
 
         for k,v in attacking_stats.items():
             attacking_stats.update({k:v.replace(" ","").replace("\n","")})
@@ -216,6 +216,7 @@ class PlayerStats:
         team_play_stats["Total Passes"] = self.soup.find('span', class_="allStatContainer stattotal_pass").get_text()
         team_play_stats["Passes per match"] = self.soup.find('span', class_="allStatContainer stattotal_pass_per_game").get_text()
         team_play_stats["Big Chances Created"] = self.soup.find('span', class_="allStatContainer statbig_chance_created").get_text()
+        team_play_stats["Crosses"] = self.soup.find('span', class_="allStatContainer stattotal_cross").get_text()
         for k,v in team_play_stats.items():
             team_play_stats.update({k:v.replace(" ","").replace("\n","")})
 
@@ -343,8 +344,8 @@ class PlayerStats:
         stats.append(defensive_stats)
 
         discipline_stats = {}
-        discipline_stats["Yellow cards"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
-        discipline_stats["Red Cards"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
+        discipline_stats["Yellow Card"] = self.soup.find('span', class_="allStatContainer statyellow_card").get_text()
+        discipline_stats["Red Card"] = self.soup.find('span', class_="allStatContainer statred_card").get_text()
         discipline_stats["Fouls"] = self.soup.find('span', class_="allStatContainer statfouls").get_text()
 
         for k,v in discipline_stats.items():
@@ -407,7 +408,7 @@ class PlayerStats:
         '''
         player = []
         # Change loop 
-        for i in range(4, 5):
+        for i in range(0, 20):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
@@ -460,5 +461,5 @@ class PlayerStats:
             player.append(player_info)
         return player
         
-inst = PlayerStats(url)
-print(inst.get_data())
+# inst = PlayerStats(url)
+# print(inst.get_data())
