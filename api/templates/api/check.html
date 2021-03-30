@@ -1,0 +1,11 @@
+{% extends "api/home.html" %}
+
+{% block content %}
+<h2>Player</h2>
+
+<ul>
+{% for items in player %}
+    <li>{{items.name}}</li>
+{% endfor %}
+</ul>
+{% endblock %}

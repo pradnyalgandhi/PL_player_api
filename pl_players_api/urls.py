@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import update_model
+from api.views import home, update_models , Player
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', update_model, name="home")
+    path('', home, name="home"),
+    path('update_db/',update_models, name="update-database"),
+    path('check', Player.as_view(), name= "check"),
 ]
