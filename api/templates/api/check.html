@@ -1,11 +1,12 @@
-{% extends "api/home.html" %}
+{% extends "api/base.html" %}
 
 {% block content %}
 <h2>Player</h2>
 
 <ul>
 {% for items in player %}
-    <li>{{items.name}}</li>
+    <li>{{items.name}} : {{items.current_club}}</li>
+    
 {% endfor %}
 </ul>
 {% endblock %}

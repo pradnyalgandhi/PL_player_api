@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('update_db/',update_models, name="update-database"),
-    path('check', Player.as_view(), name= "check"),
+    path('check/', Player.as_view(), name= "check"),
 ]

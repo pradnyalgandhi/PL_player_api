@@ -19,7 +19,6 @@ class Player(TemplateView):
       return context
 
 
-
 def update_models(request):
    status = update_model()
    if status == "OK":
