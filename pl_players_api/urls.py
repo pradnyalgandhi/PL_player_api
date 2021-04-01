@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import home, update_models , Documentation, Player
+from django.contrib.auth import views as auth_views
+from api.views import (home, 
+                        update_models , 
+                        Documentation, 
+                        Player)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
+    path('login', auth_views.LoginView.as_view(template_name = 'api/login.html')),
     path('update_db/',update_models, name="update-database"),
     path('check/', Player.as_view(), name= "check"),
-    path('docs/', Documentation.as_view(), name= "docs")
+    path('docs/', Documentation.as_view(), name= "docs"),
+    path('accounts/login/', home),
 ]

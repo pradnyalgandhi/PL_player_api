@@ -716,6 +716,10 @@ body {
     color: #FF2882;
   }
   
+  .cta .form-group{
+    text-align: center;
+    margin: auto;
+  }
   @media (max-width: 1024px) {
     .cta {
       background-attachment: scroll;

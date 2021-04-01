@@ -48,7 +48,10 @@
           <li class="active"><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'docs' %}">Docs</a></li>
           <li><a href="#">About</a></li>
+          {% if user.is_authenticated %}
           <li><a href="{% url 'update-database' %}">Update</a></li>
+          {% else %}
+          {% endif %}
           <li><a href="#">Contact</a></li>
 
         </ul>

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .update_db import update_model
 from .models import PlayerInfo
 
@@ -18,7 +19,7 @@ class Player(TemplateView):
       context['player'] = PlayerInfo.objects.all()
       return context
 
-
+@login_required()
 def update_models(request):   
    if request.method == "POST":
       status = update_model()

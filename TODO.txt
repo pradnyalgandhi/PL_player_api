@@ -201,3 +201,14 @@ Goalkeeper Stats Struct
     'Passes': '3,481',
     'Passes per match': '25.04',
     'Accurate long balls': '1,096' } } ]
+
+
+
+
+
+
+
+Create Login for updating database
+Create Contact Form with Email automation
+Create About page
+Create Documentation
