@@ -1,1 +1,22 @@
-Hello
+{% extends 'api/base.html' %}
+{% block content %}
+<section id="cta" class="cta">
+    <div class="container">
+      <div class="row" data-aos="zoom-out">
+        <div class="col-lg-9 text-center text-lg-left">
+          <h3>Update Database</h3>
+          <p> Click the buton to scrape data from Premier League website and update Database.</p>
+        </div>
+        <div class="col-lg-3 cta-btn-container text-center">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="submit" class="cta-btn align-middle text-center" value="Update Database">
+            </form>
+        </div>
+        
+      </div>
+
+    </div>
+  </section><!-- End Cta Section -->
+
+{% endblock %}

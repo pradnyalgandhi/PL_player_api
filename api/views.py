@@ -19,10 +19,15 @@ class Player(TemplateView):
       return context
 
 
-def update_models(request):
-   status = update_model()
-   if status == "OK":
-      return render(request, "api/update_db.html")
+def update_models(request):   
+   if request.method == "POST":
+      status = update_model()
+      if status == "OK":
+         return render(request, "api/update_db.html")
+   return render(request, "api/update_db.html")
+
+class Documentation(TemplateView):
+   template_name = "api/documentation.html"
 
 
 
