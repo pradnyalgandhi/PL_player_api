@@ -18,15 +18,25 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from api.views import (home, 
                         update_models , 
-                        Documentation, 
-                        Player)
+                        Documentation,
+                        PlayerInfoList,
+                        PlayerSeasonWiseStatsList,
+                        PlayerAttackingStatsList,
+                        PlayerDefensiveStatsList,
+                        PlayerDisciplinaryStatsList,
+                        PlayerTeamPlayStatsList,
+                        PlayerGoalKeepingStatsList)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('login', auth_views.LoginView.as_view(template_name = 'api/login.html')),
+    path('player_info/', PlayerInfoList.as_view(), name="player-info"),
     path('update_db/',update_models, name="update-database"),
-    path('check/', Player.as_view(), name= "check"),
     path('docs/', Documentation.as_view(), name= "docs"),
-    path('accounts/login/', home),
+    path('player_attacking_stats/', PlayerAttackingStatsList.as_view(), name="plasyer-attacking_stat"),
+    path('player_defensive_stats/', PlayerDefensiveStatsList.as_view(), name="plasyer-defensive-stat"),
+    path('player_disciplinary_stats/', PlayerDisciplinaryStatsList.as_view() , name="player-disciplinary-stat"),
+    path('player_teamplay_stats/', PlayerTeamPlayStatsList.as_view(), name="player-teamplay-stat"),
+    path('player_goalkeeping_stats/', PlayerGoalKeepingStatsList, name="player-goalkeeping-stat"),
 ]

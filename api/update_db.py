@@ -5,7 +5,8 @@ from .models import (PlayerInfo,
                      DefensiveStats, 
                      DisciplinaryStats, 
                      TeamPlayStats, 
-                     GoalkeepingStats)
+                     GoalkeepingStats,
+                     )
 
 def update_model():
     

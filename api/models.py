@@ -7,7 +7,7 @@ class PlayerInfo(models.Model):
                ('Def','Defender'),
                ('Gk','Goalkeeper')]
 
-    name = models.CharField(max_length= 50, blank=False)
+    name = models.CharField(max_length= 50, blank=False, primary_key=True)
     jersey_no = models.CharField(max_length=20, blank=True)
     current_club = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)
@@ -105,5 +105,57 @@ class GoalkeepingStats(models.Model):
 
     def __str__(self):
         return f"{self.name} - Clean Sheets : {self.clean_sheets}"
+
+
+class PlayerData(models.Model):
+    name = models.CharField(max_length= 50, null=False)
+    jersey_no = models.CharField(max_length=20, blank=True)
+    current_club = models.CharField(max_length=20, blank=True)
+    nationality = models.CharField(max_length=20, blank=True)
+    position = models.CharField(max_length=20, blank=True)
+    apps = models.IntegerField()
+    wins = models.IntegerField()
+    losses = models.IntegerField()
+    goals = models.CharField(max_length=20, blank=True)
+    headers = models.CharField(max_length=20, blank=True)
+    right_foot_goals = models.CharField(max_length=20, blank=True)
+    left_foot_goals = models.CharField(max_length=20, blank=True)
+    penalties = models.CharField(max_length=20, blank=True)
+    freekicks = models.CharField(max_length=20, blank=True)
+    shots = models.CharField(max_length=20, blank=True)
+    shots_on_target = models.CharField(max_length=20, blank=True)
+    accuracy = models.CharField(max_length=20, blank=True)
+    hit_woodwork = models.CharField(max_length=20, blank=True)
+    clean_sheets = models.CharField(max_length=20, blank=True)
+    goals_conceded = models.CharField(max_length=20, blank=True)
+    tackles = models.CharField(max_length=20, blank=True)
+    tackles_success_rate = models.CharField(max_length=20, blank=True)
+    clearances = models.CharField(max_length=20, blank=True)
+    blocked_shots = models.CharField(max_length=20, blank=True)
+    interceptions = models.CharField(max_length=20, blank=True)
+    recpveries = models.CharField(max_length=20, blank=True)
+    duels_won = models.CharField(max_length=20, blank=True)
+    dues_lost = models.CharField(max_length=20, blank=True)
+    successfull_50_50 = models.CharField(max_length=20, blank=True)
+    aerial_battles_won = models.CharField(max_length=20, blank=True)
+    aerial_battles_lost = models.CharField(max_length=20, blank=True)
+    own_goals = models.CharField(max_length=20, blank=True)
+    yellow_cards = models.IntegerField()
+    red_cards = models.IntegerField()
+    fouls = models.IntegerField()
+    offsides = models.CharField(max_length=20, blank=True)
+    assists = models.IntegerField()
+    total_passes = models.CharField(max_length=20, blank=True)
+    passes_per_match = models.CharField(max_length=20, blank=True)
+    chances_created = models.CharField(max_length=20, blank=True)
+    crosses = models.CharField(max_length=20, blank=True)
+    cross_accuracy = models.CharField(max_length=20, blank=True)
+    through_balls = models.CharField(max_length=20, blank=True)
+    long_balls = models.CharField(max_length=20, blank=True)
+
+    
+
+
+
 
 

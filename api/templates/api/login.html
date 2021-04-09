@@ -9,7 +9,8 @@
               <p> Enter the world of Narnia</p>
             </div>
             <div class="col-lg-6 text-center" >
-            <form  method="post" class="login-form">                
+            <form  method="post" class="login-form">
+              {% csrf_token %}                
                 <div class="form-group">
                 <input type="text" class="form-control" name="username" id="username" placeholder="Username" data-rule="email" data-msg="Please enter a valid email" />
                 <div class="validate"></div>                  
