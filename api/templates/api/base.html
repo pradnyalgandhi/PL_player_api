@@ -48,41 +48,47 @@
           <li class="active"><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'docs' %}">Docs</a></li>
           <li><a href="#">About</a></li>
-          {% if user.is_authenticated %}
+          {% if request.user.is_superuser %}
           <li><a href="{% url 'update-database' %}">Update</a></li>
           {% else %}
           {% endif %}
-          <li><a href="#">Contact</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="#">Profile</a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
 
         </ul>
       </nav><!-- .nav-menu -->
 
     </div>
   </header><!-- End Header -->
-  {% block content %}
 
+  {% block content %}
+    
   {% endblock %}
 
+
   <!-- ======= Footer ======= -->
-<footer id="footer">
-  <div class="container">
-    <h3>Pradnyal Gandhi</h3>
-    <p>Email : pradnyal.gandhi28@gmail.com</p>
-    <p>Aspiring Python Developer, struggling to complete 7 hrs of sleep everyday.
-      Potential Photographer, soccer fanatic and a substandard musician.</p>
-    <div class="social-links">
-      <a href="https://twitter.com/Pradnyal_2810" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
-      <a href="https://www.facebook.com/pradnyal.gandhi/" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
-      <a href="https://www.instagram.com/nb_2897/" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
-      <a href="https://www.linkedin.com/in/pradnyal-gandhi-b80275184/" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-    </div>
-    
-    <div class="credits">
-      Designed copied and edited by <a href="https://rajcablenet.herokuapp.com/about/">Pradnyal Gandhi</a><br>
+  <footer id="footer">
+    <div class="container">
+      <h3>Pradnyal Gandhi</h3>
+      <p>Email : pradnyal.gandhi28@gmail.com</p>
+      <p>Aspiring Python Developer, struggling to complete 7 hrs of sleep everyday.
+        Potential Photographer, soccer fanatic and a substandard musician.</p>
+      <div class="social-links">
+        <a href="https://twitter.com/Pradnyal_2810" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://www.facebook.com/pradnyal.gandhi/" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="https://www.instagram.com/nb_2897/" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/pradnyal-gandhi-b80275184/" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
       
+      <div class="credits">
+        Design copied and edited by <a href="https://rajcablenet.herokuapp.com/about/">Pradnyal Gandhi</a><br>
+        
+      </div>
     </div>
-  </div>
-</footer><!-- End Footer -->
+  </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
 

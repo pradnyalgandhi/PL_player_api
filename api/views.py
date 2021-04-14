@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .update_db import update_model
 from .models import PlayerInfo, PlayerSeasonWiseStats, AttackingStats, DefensiveStats, TeamPlayStats, GoalkeepingStats, DisciplinaryStats, PlayerData
 from .serializers import (PlayerSerializers, 
@@ -13,7 +13,6 @@ from .serializers import (PlayerSerializers,
 
 from django.views.generic import TemplateView
 
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 
@@ -21,8 +20,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 def home(request):
    return render(request, 'api/home.html')
 
-@login_required()
-def update_models(request):   
+@login_required
+def update_models(request):
    if request.method == "POST":
       status = update_model()
       if status == "OK":

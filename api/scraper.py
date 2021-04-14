@@ -408,7 +408,7 @@ class PlayerStats:
         '''
         player = []
         # Change loop 
-        for i in range(0, 50):
+        for i in range(0, 100):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
