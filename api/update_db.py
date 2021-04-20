@@ -18,7 +18,6 @@ def update_model():
     PlayerInfo.objects.all().delete()  
     for item in data_library: 
         
-        
         player = PlayerInfo(
                             name=item['Name'],
                             jersey_no=item["Jersey No"],

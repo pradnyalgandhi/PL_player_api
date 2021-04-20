@@ -682,7 +682,7 @@ body {
   # Cta
   --------------------------------------------------------------*/
   .cta {
-    background: #2a2c39;
+    background: #2A2C39;
     padding: 80px 0;
   }
   
@@ -1182,9 +1182,10 @@ body {
   }
   
   .team .member .member-img {
-    position: relative;
     overflow: hidden;
+    object-fit: contain;
   }
+
   
   .team .member .social {
     position: absolute;
@@ -1282,16 +1283,61 @@ body {
   }
   
   .contact button[type="submit"] {
-    background: #FF2882;
+    background: transparent;
     border: 0;
     padding: 10px 24px;
     color: #fff;
     transition: 0.4s;
     border-radius: 50px;
+    border:  2px solid #FF2882;
   }
   
   .contact button[type="submit"]:hover {
-    background: #fc8129;
+    background: #FF2882;
+    color: #fff;
+  }
+
+  .contact .member{
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .contact .member-img{
+    overflow: hidden;
+    object-fit: contain;
+  }
+
+  .contact .profile-img{
+    position: relative;
+    overflow: hidden;
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+  }
+
+  .contact .member .member-info {
+    padding: 25px 15px;
+  }
+  
+  .contact .member .member-info h3 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 24px;
+    color: #FF2882;
+  }
+  
+  .contact .member .member-info span {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    color: #aaaaaa;
+  }
+  
+  .contact .member .member-info p {
+    font-style: italic;
+    font-size: 16px;
+    line-height: 26px;
+    color: #d4d6df;
   }
   
   @-webkit-keyframes animate-loading {

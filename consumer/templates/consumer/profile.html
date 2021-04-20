@@ -1,0 +1,71 @@
+{% extends 'api/base.html'%}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<section class="contact">
+
+    <div class="container">
+        <div class="section-title" data-aos="zoom-out">
+                
+            <p>Hello,{{request.user}}</p>
+            <h2>Your profile</h2>
+        </div>
+
+        <div class="row mt-2">      
+     
+            <div class="col-lg-6 mt-5 mt-lg-2" data-aos="fade-right">
+  
+              <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{update_form.username}}
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        {{update_form.first_name|as_crispy_field}}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        {{update_form.last_name|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="form-group">
+                  {{update_form.email|as_crispy_field}}
+                </div>
+
+                <div class="form-group text-center"><button type="submit">Update</button></div>
+               
+              </form>      
+            </div>  
+            
+            <div class="col-lg-6 mt-5 mt-lg-2 text-center" data-aos="fade-left">
+                <div class="member" data-aos="fade-up">
+                    <div class="member-img">
+                      <img src="{% static 'api/img/kakashi.jpg' %}" class="profile-img" alt="">
+                      
+                    </div>
+                    <div class="member-info">
+                      <h4>{{request.user.first_name}} {{request.user.last_name}}</h4>
+                      <span>a.k.a {{request.user.username}}</span>
+                    </div>
+                  </div>
+
+                
+            </div>
+          </div>
+          <div class="member text-center" data-aos="fade-up">
+                    
+            <div class="member-info">                      
+              <h3>Note</h3>
+              <p>Refer to the <a href="{% url 'docs' %}">Documentation</a> to get the Access Token for making API calls and more. </p>
+              
+            </div>
+          </div>
+    </div>
+
+
+</section>
+
+        
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'api/base.html' %}
+{% block content %}
+{% load static %}
+<section id="cta" class="cta">
+    <div class="container">
+        <div class="row" data-aos="zoom-out">
+            <div class="col-lg-12 text-center text-center">
+              <h3>You have been Logged Out</h3>
+              <p>We miss you already</p>              
+              <a class="cta-btn align-middle" href="{% url 'login'%}">Login In</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}

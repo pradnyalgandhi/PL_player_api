@@ -51,3 +51,12 @@ class ConsumerForm(UserCreationForm):
 
         if password == "" or password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
+
+class ConsumerUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email = forms.EmailField(max_length=50)
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name","email"]

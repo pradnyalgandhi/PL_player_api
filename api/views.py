@@ -24,8 +24,7 @@ def home(request):
 def update_models(request):
    if request.method == "POST":
       status = update_model()
-      if status == "OK":
-         return render(request, "api/update_db.html")
+      return render(request, "api/update_db.html")
    return render(request, "api/update_db.html")
 
 class Documentation(TemplateView):

@@ -408,7 +408,7 @@ class PlayerStats:
         '''
         player = []
         # Change loop 
-        for i in range(0, 100):
+        for i in range(150, 160):
 
             player_info = {}
             req = requests.get(self.player_urls[i])
@@ -416,6 +416,7 @@ class PlayerStats:
             self.soup = soup_overview
 
             player_info['Name'] = self.get_name()
+            print(player_info['Name'])
             player_info['Current Club'] = self.get_club()      
             player_info['Nationality'] = self.get_nationality()
             player_info['Position'] = self.player_position[i]

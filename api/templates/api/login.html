@@ -11,17 +11,20 @@
             <div class="col-lg-6 text-center" >
             <form  method="post" class="login-form">
               {% csrf_token %}                
-                <div class="form-group">
+                <div class="form-group" style="padding: 10px">
                 <input type="text" class="form-control" name="username" id="username" placeholder="Username" data-rule="email" data-msg="Please enter a valid email" />
                 <div class="validate"></div>                  
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="padding: 10px">
                   <input type="password" class="form-control" name="password" id="password" placeholder="Password" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
                   <div class="validate"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="padding: 10px">
+                  <small class="text-muted">
+                   <a class="ml-2" href="{% url 'consumer-register' %}">Sign Up Now</a>
+                  </small>
                     <input type="submit" class=" cta-btn align-middle text-center"/>
-                  </div>
+                </div>
               </form>
             </div>
         </div>
